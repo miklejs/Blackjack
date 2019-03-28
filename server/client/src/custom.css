@@ -1,0 +1,80 @@
+
+
+.backgroundimage{
+    background-image: url(./images/start_page_bg_1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 1005;
+    height: 100vh;
+}
+
+
+.gametable {
+    background-image: url(./images/black_jack_table_pack.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 1005;
+    height: 100vh;
+}
+
+.buttonOnLogin1 {
+    
+    margin-right:16px;
+    
+    
+}
+
+
+
+
+.visible {
+    visibility: visible;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+
+
+.head{
+    margin-top: 50px;
+    color: wheat;
+    justify-content: center;
+    text-align: center;
+}
+
+.tables{
+    margin-top: 20px;
+}
+
+.table1{
+    margin-right:6px;
+    background-color: rgb(167, 39, 39);
+    
+    
+   }
+.table2{
+    margin-right:6px;
+    background-color: rgb(177, 98, 53);
+}
+.table3{
+    
+    background-color: rgb(41, 73, 143);
+}
+
+table.table-bordered th {
+    border:1px solid black;
+}
+table.table-bordered td {
+    border:1px solid black;
+}
+
+.btnOnStartPage{
+    justify-content: center;
+}
+.start1{
+    margin-right:300px;
+}

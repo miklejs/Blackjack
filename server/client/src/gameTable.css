@@ -1,0 +1,107 @@
+.chips {
+    justify-content: space-around;
+    margin-bottom: 10px;  
+    
+    
+}
+
+
+
+
+.gameStat{
+    margin-top: 20px;
+    justify-content: end;
+    color: antiquewhite;
+    font-family: cursive;
+}
+
+.chip5{
+    margin-right:6px;
+    background-image: url(./images/chips/chip_blue_5.png);
+    width: 95px;
+    height: 100px;
+    border-radius: 50px;    
+    
+    
+}
+
+.chip10{
+    margin-right:6px;
+    background-image: url(./images/chips/chip_black_10.png);
+    width: 95px;
+    height: 100px;
+    border-radius: 50px;  
+    outline-style: none;
+}
+
+.chip15{
+    margin-right:6px;
+    background-image: url(./images/chips/chip_red_15.png);
+    width: 95px;
+    height: 100px;
+    border-radius: 50px;  
+}
+.chip25{
+    
+    background-image: url(./images/chips/chip_green_25.png);
+    width: 95px;
+    height: 100px;
+    border-radius: 50px;  
+}
+
+h1{
+    color: rgb(196, 164, 26);
+}
+
+.gamebuttons{
+    margin-top:10px;
+    margin-bottom:10px;
+    font-family: cursive;
+    
+    
+    
+}
+
+.mainButtons{
+    font-family: cursive; 
+}
+
+.Placebet{
+    margin-right:8px;
+    
+    
+}
+.Clearbet{
+    margin-right:8px;
+}
+.Hit{
+    margin-right:8px;
+}
+
+.LogOut{
+    margin-right:6px;
+    
+}
+
+.HomePage{
+    margin-right:6px;
+}
+.userName{
+    text-align: end;
+    font-family: cursive;
+}
+.croupierCards{
+    justify-content: center;
+    margin-bottom: 70px;
+}
+.userCards{
+    justify-content: center;
+}
+.gameBtn {
+    margin-bottom: 45px;
+    color: white;
+    background-color: rgb(214, 95, 26);
+    font-family: cursive;
+    
+    font-size: 20px;
+}

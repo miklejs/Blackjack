@@ -1,0 +1,15 @@
+{
+  "name": "blackjack",
+  "version": "1.0.0",
+  "description": "blackjack game",
+  "main": "./server/client/build/index.js",
+  "scripts": {
+    "clientinstall": "cd server/client && npm install",
+    "serverinstall": "cd server && npm install",
+    "client": "cd server/client && npm start",
+    "start": "cd server && npm start",    
+    "install": "concurrently \"npm run clientinstall\" \"npm run serverinstall\""
+  },
+  "author": "",
+  "license": "ISC"
+}
