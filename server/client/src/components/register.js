@@ -30,7 +30,7 @@ class Register extends Component {
   const password = this.state.password;
   const username = this.state.username;
   const confirmedPass = this.state.confirmedPass;
-  if (username !== confirmedPass){
+  if (password !== confirmedPass){
     this.setState({
       showWarning: true,
       typeOfWarning: "Passwords do not match"});
@@ -96,22 +96,22 @@ warnswitcher(){
             <div>
               <form onSubmit={this.handleSubmit} className="text-white">
                 <div className="form-group">
-                  <label for="exampleInputName1">Name</label>
-                  <input type="text" className="form-control" id="exampleInputName1" minlength = "5" maxlength = "12" placeholder="Name" ref="username" onChange={this.handleInput} required></input>
+                  <label htmlFor="exampleInputName1">Name</label>
+                  <input type="text" className="form-control" id="exampleInputName1" minLength = "5" maxLength = "12" placeholder="Name" ref="username" onChange={this.handleInput} required></input>
                 </div>
                 <div className="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
+                  <label htmlFor="exampleInputEmail1">Email address</label>
                   <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" ref="email" onChange={this.handleInput} required></input>
                   <small id="emailHelp" className="form-text">We'll never share your email with anyone else.</small>
                 </div>
                 <div className="form-group">
-                  <label for="exampleInputPassword1">Password</label>
+                  <label htmlFor="exampleInputPassword1">Password</label>
                   <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" ref="password" onChange={this.handleInput} required></input>
                   
                 </div> 
                 <div className="form-group">
-                  <label for="exampleInputPassword1">Confirm Password</label>
-                  <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Confirm Password" ref="confirmedPass" onChange={this.handleInput} required></input>
+                  <label htmlFor="exampleInputPassword1">Confirm Password</label>
+                  <input type="password" className="form-control" id="exampleInputPassword2" placeholder="Confirm Password" ref="confirmedPass" onChange={this.handleInput} required></input>
                   
                 </div> 
                 <button  className="btn btn-primary">Register</button>                 

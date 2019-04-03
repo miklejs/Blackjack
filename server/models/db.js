@@ -70,7 +70,7 @@ let findByUsername = async function (userData) {
       let findBy = {};
       findBy.username = userData.username;
       //password 
-      await user.findOne(findBy, 'username moneyAmount email', async function (err, user){
+      await user.findOne(findBy, {_id:0 ,username:1, moneyAmount:1, email:1}, async function (err, user){
         console.log("!!!!!!!!! ",user);
         if (err) {
           console.log(err);
@@ -116,7 +116,7 @@ let findByEmail = async function (userData) {
       let findBy = {};
       findBy.email = userData.email;
       console.log("Email in findByEmail search ",findBy)
-      await user.findOne(findBy, 'username password moneyAmount, email', function (err, user){
+      await user.findOne(findBy, {_id:0 ,username:1, moneyAmount:1, email:1, password:1}, function (err, user){
         if (err) {
           console.log(err);
           returnObj.err = true;
@@ -159,32 +159,28 @@ let checkLogin = async function (userData) {
     returnObj.err = false;
     let userObj = await findByEmail(userData);
     console.log('findByEmail ', userObj);
-    if (userObj.user === null || userObj.err) {
-      console.log("trtolollo")
+    if (userObj.user === null || userObj.err) {      
       returnObj.msg = "no such email in our database";
         if (userModel.err) {
           returnObj.msg = "internal server error";
           returnObj.err = true;
         }
-    } else {
-      console.log("1");
+    } else {      
       const match = await bcrypt.compare(userData.password, userObj.user.password);
-        if (match) {
-          console.log("2");
+        if (match) {          
           returnObj.success = true;
           returnObj.err = false;
-          returnObj.username = userObj.user.username;
-          returnObj.password = userObj.user.password;
+          returnObj.username = userObj.user.username;          
         } else {
           returnObj.msg = 'wrong password';
         }
     }
   } catch (error) {
-    console.log(error);
+    console.log("Error in checkLogin(db.js): ",error);
     returnObj.err = true;
     return returnObj;
   }
-  console.log('a ', returnObj);
+  console.log('checkLogin: ', returnObj);
   return returnObj;
 }
 
@@ -207,14 +203,12 @@ let checkRegister = async function(userData){
         returnObj.msg = 'user already exist';  
         console.log("user already exist", returnObj)      
       }
-    } 
-    console.log("3333333333333")
+    }    
      
        if (returnObj.msg === 'user already exist') {
         console.log("user already exist")
        } else {
-         let userObjEmail = await findByEmail(userData);
-         console.log("userObj in findByEmail function ", userObj);
+         let userObjEmail = await findByEmail(userData);         
          if (userObjEmail.user === null || userObjEmail.err) 
          {
             if (userObjEmail.err) {
@@ -228,8 +222,7 @@ let checkRegister = async function(userData){
                 });
               });  
               userData.password = hashedPassword;
-              let reg = await createNewUser(userData);  
-              console.log("reg", reg) 
+              let reg = await createNewUser(userData);              
               if (reg.msg === 'Creating new user successful'){
                 returnObj.success = true;
                 returnObj.msg = 'register done';
@@ -243,7 +236,7 @@ let checkRegister = async function(userData){
          }  
        }     
   } catch (error) {
-    console.log(error);
+    console.log("Error in checkRegister (db.js): ",error);
     returnObj.err = true;
     returnObj.msg = 'internal error';
     return returnObj;
@@ -266,9 +259,8 @@ let getUser = async function(username) {
       }
       return user
     })
-  } catch (err) {
-    console.log(err);
-    console.log("catch error in getuser function");
+  } catch (error) {
+    console.log("Error in getUser (db.js): ",error);
     
   }
   //console.log("User in getUser function ", find);
@@ -277,9 +269,6 @@ let getUser = async function(username) {
 
 let getCurrentGame = async function(userData){
   console.log("getCurrentGame ", userData.username)
-  console.log("getCurrentGame ", typeof userData.username)
-
-  
   let returnObj = {};
   try {
     if(!user) {
@@ -305,15 +294,14 @@ let getCurrentGame = async function(userData){
       }
     })
   } catch (error) {
-    console.log(error);
+    console.log("Error in getCurrentGame (db.js): ",error);
     returnObj.err == true;
   }
   console.log("getCurrentGame in db ", returnObj)
   return returnObj;
 }
 
-let createNewGame = async function(userData){
-  //console.log("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", typeof userData.moneyAmount)
+let createNewGame = async function(userData){  
   let returnObj = {};
   let createGameObj = {};
   
@@ -360,31 +348,10 @@ let createNewGame = async function(userData){
               console.log("User in the end of createNewGame",user[0]);
               //console.log("jjjjjjjjjjjj",user);
             }
-        }
-       /* await newGame.save(async function (err, game) {
-        if (err) {
-          returnObj.err = true;
-        } else {
-            //console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOO  ", game)
-            returnObj.game = game;
-              if (returnObj.game.croupierCards) {
-                returnObj.game.croupierCards = returnObj.game.croupierCards.slice(0, (returnObj.game.croupierCards.length - 1))[0];
-              }
-            let filter = { username: userData.username },
-            update = { $inc: { moneyAmount: -returnObj.game.bet }};            
-            console.log(filter);
-            console.log("game.bet:   ",returnObj.game.bet); 
-            let upd = await user.updateMany(filter, update);
-            if (upd){
-              let user = await getUser(userData.username);
-              console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",user[0]);
-              console.log("jjjjjjjjjjjj",user);
-            }
-        }
-      });  */
+        }     
     }
   } catch (error) {
-    console.log(error);
+    console.log("Error in createNewGame (db.js): ",error);
     returnObj.err = true;
 
   }
@@ -407,7 +374,7 @@ let getGame = async function(id){
     }
     
   } catch (error) {
-    console.log(err)
+    console.log("Error in getGame (db.js): ",error);
   }
   return returnObj
 }
@@ -448,8 +415,7 @@ let getCard = async function(data){
           returnObj.game.croupierCards = returnObj.game.croupierCards.slice(0, (returnObj.game.croupierCards.length - 1))[0];
         }
   } catch (error) {
-    console.log(err);
-    console.log("error in getCard in DB")
+    console.log("Error in getCard (db.js): ",error);
     returnObj.err = true;
   }
   //console.log("QQQQQQQQQQQQ",returnObj.game[0])
@@ -494,7 +460,7 @@ let updateUser = async function(gameData){
     console.log("updatedUser", updatedUser[0])
     
   } catch (error) {
-    console.log("Error in updateUser in DB ",error)
+    console.log("Error in updateUser in (db.js): ",error)
   }
 
 }
@@ -525,7 +491,7 @@ let stand = async function(data){
     await updateUser(returnObj.game)
     
   } catch (error) {
-    console.log("Error in stand function in DB ",error);
+    console.log("Error in stand function in (db.js): ",error);
     returnObj.game = null;
   }
   return returnObj
@@ -554,7 +520,7 @@ let getLastGame = async function(user){
     
     
   } catch (error) {
-    console.log("Error in getLastGame in DB ", error)
+    console.log("Error in getLastGame in (db.js): ", error)
   }
   console.log("returnObj", returnObj)
   return returnObj;
@@ -603,7 +569,7 @@ let getTopUsers = async function(conditions){
     }
     
   } catch (error) {
-    console.log("Error in getAllUsers in DB ", error)
+    console.log("Error in getAllUsers in (db.js): ", error)
   }
   return returnObj
 }

@@ -16,8 +16,7 @@ class Game extends Component {
        super(props);
         this.state = {
             
-            username: Cookies.get('username'),
-            password: Cookies.get('password'),
+            username: Cookies.get('username'),            
             loginned: Cookies.get('auth'),
             showWarning: false,
             typeOfWarning: "",
@@ -59,7 +58,7 @@ class Game extends Component {
 
 
     async componentDidMount () {
-     if (!this.state.username || !this.state.password || !this.state.loginned){
+     if (!this.state.username || !this.state.loginned){
          await this.setState({
             isLoginned: false
          })
@@ -75,12 +74,6 @@ class Game extends Component {
             await this.setState({
                 showWarning: true,
                 typeOfWarning: "You must finish this game before start another!"
-            }, async function(){
-                
-                    this.setState({
-                        showWarning: true
-                    })
-                
             });
         } else {
             
@@ -224,7 +217,7 @@ class Game extends Component {
         try {
             let res = await axios.post("/users/getUserData", data);
             
-                //console.log("response in updateUserData: ",res.data)
+                console.log("response in updateUserData: ",res.data)
                 if(res.data.user === null){
                     this.setState({
                         isLoginned: false
@@ -253,20 +246,13 @@ class Game extends Component {
             let res = await axios.post("/users/getCurrentGame", data);
                 
                     //console.log("response in getActiveGame: ",res.data)
-                    if(res.data.game === null) {
-                        this.setState({
-                            showNewGameBtn: true
-                        });
-                    } else {
                         await this.setState({
-                            currentGame: res.data.game,
-                            isLive: true,
-                            showNewGameBtn: false,
+                            currentGame: res.data.game,                        
                             betSize: res.data.game.moneyAmount                            
                         }, async function(){
                             await this.updateTable(res.data, false)
                         })
-                    }
+                    
                 
         } catch (error) {
             console.log("Error in getActiveGame: ",error)            
@@ -283,28 +269,30 @@ class Game extends Component {
                     showWarning: true,
                     typeOfWarning: "Press Start New Game"
                 });
-            }
-            if(this.state.currentScore >= 21 && this.state.possibleScore.value >=21) {
-                //console.log("Over")                
-               await this.setState({
-                    showWarning: true,
-                    typeOfWarning: "Bust"
-                });
-               // console.log("showWarning",this.state.showWarning, this.state.typeOfWarning)
             } else {
-                let res = await axios.post("/users/getcard", userId);          
-                //console.log("response in getcard: ", res.data)
-                if (res.data.game == null) {
-                    await this.setState({
-                        showNewGameBtn: true
-                    })
+                if(this.state.currentScore >= 21 && this.state.possibleScore.value >=21) {
+                    //console.log("Over")                
+                   await this.setState({
+                        showWarning: true,
+                        typeOfWarning: "Bust"
+                    });
+                   // console.log("showWarning",this.state.showWarning, this.state.typeOfWarning)
                 } else {
-                    await this.setState({
-                        currentGame: res.data.game,
-                    }, await async function(){
-                        this.updateTable(res.data, false)
-                    })
-                }};             
+                    let res = await axios.post("/users/getcard", userId);          
+                    //console.log("response in getcard: ", res.data)
+                    if (res.data.game == null) {
+                        await this.setState({
+                            isLive: false
+                        })
+                    } else {
+                        await this.setState({
+                            currentGame: res.data.game,
+                        }, await async function(){
+                            this.updateTable(res.data, false)
+                        })
+                    }}; 
+            }
+                        
         } catch (error) {
             console.log("Error in Hit Button (handleHitBtn)", error)
         }                 
@@ -352,7 +340,7 @@ class Game extends Component {
                 await this.updateUserData();
                 //console.log("response in stand: ", res.data)
                  await this.setState({
-                     isLive:false,                                          
+                     isLive: false,                                          
                  }, async function() {
                     await this.updateTable(res.data, true)
                  });

@@ -42,8 +42,7 @@ class Home extends Component {
         })
         //console.log("username: ", this.state.username)
         //this.props.history.push('gametable') changed
-        Cookies.set('username', this.state.username);
-        Cookies.set('password', this.state.password);
+        Cookies.set('username', this.state.username);        
         Cookies.set('auth', true);
         auth.login(() => {
           this.props.history.push('/startpage');
