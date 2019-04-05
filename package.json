@@ -8,7 +8,8 @@
     "serverinstall": "cd server && npm install",
     "client": "cd server/client && npm start",
     "start": "cd server && npm start",    
-    "install": "concurrently \"npm run clientinstall\" \"npm run serverinstall\""
+    "install": "concurrently \"npm run clientinstall\" \"npm run serverinstall\"",
+    "build": "cd server/client && npm run build"
   },
   "author": "",
   "license": "ISC"
